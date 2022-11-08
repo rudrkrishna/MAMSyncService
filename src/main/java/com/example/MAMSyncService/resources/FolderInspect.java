@@ -4,6 +4,9 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.example.MAMSyncService.service.SyncService;
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationListenerAdaptor;
@@ -12,17 +15,19 @@ import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-public class Logger {
+public class FolderInspect {
     // A hardcoded path to a folder you are monitoring .
     public static final String FOLDER =
-            "/var/www/pimcore/public/var/assets";
-    public static ArrayList<String> files = new ArrayList<String>();
+            "/Users/rudrkrishna/Desktop/run";
+
+    public static Logger logger;
 
     public static SyncService syncService;
 
     @Autowired
-    public Logger(SyncService syncService) {
-        this.syncService = syncService;
+    public FolderInspect(SyncService syncService, Logger log) {
+        FolderInspect.syncService = syncService;
+        FolderInspect.logger= log;
     }
 
     public static <bool> void main(String[] args) throws Exception {
@@ -32,6 +37,8 @@ public class Logger {
         File folder = new File(FOLDER);
 
         if (!folder.exists()) {
+            logger.severe("Directory not found: " + FOLDER);
+
             // Test to see if monitored folder exists
             throw new RuntimeException("Directory not found: " + FOLDER);
         }
@@ -42,12 +49,12 @@ public class Logger {
         FileAlterationListener listener = new FileAlterationListenerAdaptor() {
             // Is triggered when a file is created in the monitored folder
 
-            boolean append = true;
+            final boolean append = true;
 
-            boolean autoFlush = true;
+            final boolean autoFlush = true;
             // Create the FileOutputStream object in append mode.
-            FileOutputStream fos = new FileOutputStream("/home/ubuntu/mamjarfile/logger.txt", append);
-            PrintStream ps = new PrintStream(fos, autoFlush);
+            final FileOutputStream fos = new FileOutputStream("/Users/rudrkrishna/Desktop/run/log/logger.txt", append);
+            final PrintStream ps = new PrintStream(fos, autoFlush);
 
             // Set the PrintStream object to the syste.output.
 
@@ -69,11 +76,16 @@ public class Logger {
                     System.out.println("creationTime: " + attr.creationTime());
                     System.out.println("lastModifiedTime: " + attr.lastModifiedTime());
 
+                    logger.info("File created: " + file.getCanonicalPath());
+                    logger.info("creationTime: " + attr.creationTime());
+                    logger.info("lastModifiedTime: " + attr.lastModifiedTime());
+
                     ArrayList<String> arr = new ArrayList<String>();
                     arr.add(file.getCanonicalPath());
                     arr.add(String.valueOf(attr.creationTime()));
                     arr.add(String.valueOf(attr.lastModifiedTime()));
-                    syncService.SyncFiles(arr);
+                    arr.add(String.valueOf(attr.fileKey()));
+                    syncService.SyncFiles(arr, logger);
 
                 } catch (IOException e) {
                     e.printStackTrace(System.err);

@@ -11,12 +11,5 @@ import java.util.List;
 
 public interface AssetsRepository extends CrudRepository<Assets, Integer> {
 
-    /*@Query(value = "select * from assets", nativeQuery = true)
-    List<Object[]> insertData();
 
-    @Modifying
-    @Query(value = "insert into assets(id,filename, hasMetaData, versionCount) values (:id,:fileName,:metaData,:vCount)", nativeQuery = true)
-    @Transactional
-    void insertManually(@Param("id") int id, @Param("fileName") String fileName, @Param("metaData") int metaData, @Param("vCount")int vCount);
-*/
 }

@@ -1,7 +1,5 @@
 package com.example.MAMSyncService;
 
-
-import com.example.MAMSyncService.resources.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
