@@ -39,7 +39,7 @@ public class SyncService {
             assets.setCustomSettings("a:0:{}");
             assets.setUserModification(Integer.valueOf(array.get(3)));
             assets.setHasMetaData(Byte.valueOf(array.get(4)));
-            assets.setVersionCount(Integer.valueOf(array.get(3)));
+            assets.setVersionCount(Integer.valueOf(array.get(5)));
             assetsRepository.save(assets);
             logger.info("File Data Updated in the Data Base");
         }
@@ -97,6 +97,14 @@ public class SyncService {
             data.add("document");
             data.add(filePath[filePath.length-1]);
             data.add("application"+"/vnd.openxmlformats-officedocument.wordprocessingml.document");
+            data.add("2");
+            data.add("0");
+            data.add("1");
+        }
+        if(type.equalsIgnoreCase("pptx")){
+            data.add("document");
+            data.add(filePath[filePath.length-1]);
+            data.add("application"+"/vnd.openxmlformats-officedocument.presentationml.presentation");
             data.add("2");
             data.add("0");
             data.add("1");

@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class FolderInspect {
     // A hardcoded path to a folder you are monitoring .
     public static final String FOLDER =
-            "/Users/rudrkrishna/Desktop/run";
+            "/var/www/pimcore/public/var/assets";
 
     public static Logger logger;
 
@@ -32,7 +32,7 @@ public class FolderInspect {
 
     public static <bool> void main(String[] args) throws Exception {
         // The monitor will perform polling on the folder every 5 seconds
-        final long pollingInterval = 5 * 1000;
+        final long pollingInterval = 300 * 1000;
 
         File folder = new File(FOLDER);
 
@@ -53,7 +53,7 @@ public class FolderInspect {
 
             final boolean autoFlush = true;
             // Create the FileOutputStream object in append mode.
-            final FileOutputStream fos = new FileOutputStream("/Users/rudrkrishna/Desktop/run/log/logger.txt", append);
+            final FileOutputStream fos = new FileOutputStream("/home/ubuntu/logger.txt", append);
             final PrintStream ps = new PrintStream(fos, autoFlush);
 
             // Set the PrintStream object to the syste.output.
@@ -95,7 +95,7 @@ public class FolderInspect {
             }
 
             // Is triggered when a file is deleted from the monitored folder
-            @Override
+            /*@Override
             public void onFileDelete(File file) {
                 try {
                     // Redirecting ouput to logfile
@@ -111,7 +111,7 @@ public class FolderInspect {
                 } catch (IOException e) {
                     e.printStackTrace(System.err);
                 }
-            }
+            }*/
         };
 
         observer.addListener(listener);
