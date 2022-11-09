@@ -11,9 +11,9 @@ import java.util.logging.Logger;
 @RestController
 public class SyncController {
 
-    private SyncService syncService;
-    private FolderInspect folder;
-    private Logger logger;
+    private final SyncService syncService;
+    private final FolderInspect folder;
+    private final Logger logger;
 
     @Autowired
     public SyncController(SyncService syncService) {
@@ -27,6 +27,6 @@ public class SyncController {
 
     @GetMapping("/startSync")
     public void startFileSync() throws Exception {
-        folder.main(null);
+        FolderInspect.main(null);
     }
 }
