@@ -53,14 +53,14 @@ public class SyncService {
         String type=filePath[filePath.length-1].split("[.]")[filePath[filePath.length-1].split("[.]").length-1];
         String fileName=filePath[filePath.length-1].split("[.]")[filePath[filePath.length-1].split("[.]").length-2];
 
-        if(type.equalsIgnoreCase("jpg") || type.equalsIgnoreCase("jpeg") || type.equalsIgnoreCase("png")){
+        /*if(type.equalsIgnoreCase("jpg") || type.equalsIgnoreCase("jpeg") || type.equalsIgnoreCase("png")){
             data.add("image");
             data.add(fileName+"."+type);
             data.add(data.get(0)+"/"+type);
             data.add("2");
             data.add("0");
             data.add("1");
-        }
+        }*/
         if(type.equalsIgnoreCase("mp4")){
             data.add("video");
             data.add(fileName+"."+type);
