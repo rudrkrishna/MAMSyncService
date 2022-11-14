@@ -77,7 +77,7 @@ public class SyncService {
             data.add("0");
            data.add("1");
         }
-        if(type.equalsIgnoreCase("txt")){
+        if(type.equalsIgnoreCase("txt") || type.equalsIgnoreCase("csv")){
             data.add("text");
             data.add(fileName+"."+type);
             data.add(data.get(0)+"/"+type);
@@ -109,6 +109,15 @@ public class SyncService {
             data.add("0");
             data.add("1");
         }
+        if(type.equalsIgnoreCase("xlsx")){
+            data.add("document");
+            data.add(filePath[filePath.length-1]);
+            data.add("application"+"/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            data.add("2");
+            data.add("0");
+            data.add("1");
+        }
+
 
     return data;
     }
@@ -129,12 +138,9 @@ public class SyncService {
 
     private static boolean isNotDuplicate(String fileName){
 
-        int digitCount=0;
-        for(int i=0;i<fileName.length();i++){
-            if(Character.isDigit(fileName.charAt(i))){
-                digitCount++;
-            }
-        }
+        int digitCount=(int)fileName.chars()
+                .filter(Character::isDigit)
+                .count();
 
         return digitCount < 15;
     }

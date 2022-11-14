@@ -1,11 +1,9 @@
 package com.example.MAMSyncService.resources;
 
 import java.io.*;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.example.MAMSyncService.service.SyncService;
@@ -21,9 +19,11 @@ public class FolderInspect {
 
     // A hardcoded path to a folder you are monitoring .
     public static final String FOLDER =
-            "/var/www/pimcore/public/var/assets";
+            //"/Users/rudrkrishna/Desktop/folderTest";
+           "/var/www/pimcore/public/var/assets";
 
     public static final String csvFilePath=
+            //"/Users/rudrkrishna/Desktop/fileData.csv";
             "/home/ubuntu/fileData.csv";
 
     public static Logger logger;
@@ -36,9 +36,9 @@ public class FolderInspect {
         FolderInspect.logger= log;
     }
 
-    public static <bool> void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         // The monitor will perform polling on the folder every 5 seconds
-        final long pollingInterval = 5 * 100;
+        final long pollingInterval = 120 * 1000;
 
         File folder = new File(FOLDER);
         File csvFile = new File(csvFilePath);
@@ -75,10 +75,9 @@ public class FolderInspect {
             @Override
             public void onFileCreate(File file) {
 
-
                 try {
 
-                    CSVWriter writer = new CSVWriter(new FileWriter(csvFile, true));
+                   CSVWriter writer = new CSVWriter(new FileWriter(csvFile, true));
 
                     // "file" is the reference to the newly created file
                     // To redirect the terminal output to a logfile for extraction of data
@@ -98,12 +97,11 @@ public class FolderInspect {
                     logger.info("creationTime: " + attr.creationTime());
                     logger.info("lastModifiedTime: " + attr.lastModifiedTime());
 
-                    ArrayList<String> arr = new ArrayList<String>();
+                    ArrayList<String> arr = new ArrayList<>();
                     arr.add(file.getCanonicalPath());
                     arr.add(String.valueOf(attr.creationTime()));
                     arr.add(String.valueOf(attr.lastModifiedTime()));
                     arr.add(String.valueOf(attr.fileKey()));
-
                     syncService.SyncFiles(arr, logger);
                     writer.close();
 
