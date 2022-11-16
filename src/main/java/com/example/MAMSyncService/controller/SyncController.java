@@ -21,9 +21,8 @@ public class SyncController {
         this.logger=Logger.getLogger(FolderInspect.class.getName());
         this.folder=new FolderInspect(this.syncService, logger);
 
+
     }
-
-
 
     @GetMapping("/startSync")
     public void startFileSync() throws Exception {
